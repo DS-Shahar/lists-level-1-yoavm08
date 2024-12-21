@@ -74,12 +74,94 @@ public class Main {
 	    return q5(a.getNext(), b);
 	}
 
-    public static void main(String[] args) 
-    {
-        Node<Integer> a = q1(1, 10, 10);
-        int z = q2(a, 7);
-        System.out.println("The number " + 7 + " appears " + z + " times.");
+    public static Node<Integer> q6(Node<Integer> a, int x)
+	{
+	    if (a == null)
+	    	return null;
+	    if (a.getValue() == x)
+	    	return a.getNext();
+	    Node<Integer> b = a;
+	    while (b.getNext() != null)
+	    {
+	        if (b.getNext().getValue() == x) 
+	        {
+	            b.setNext(b.getNext().getNext());
+	            return a;
+	        }
+	        b = b.getNext();
+	    }
+	    return a;
+	}
+	
+	
+	public static Node<Integer> q7(Node<Integer> a, int x)
+	{
+	    if (a == null || x <= 0) 
+	    	return a;
+	    if (x == 1) return a.getNext();
+	    Node<Integer> b = a;
+	    int i = 1;
+	    while(b.getNext() != null && i < x - 1)
+	    {
+	    	b = b.getNext();
+	    	i++;
+	    }
+	    if (b.getNext() != null)
+	        b.setNext(b.getNext().getNext());
+	    return a;
+	}
+	
+	
+	public static boolean exe8(Node<Integer> a, Node<Integer> b) {
+        if (a == null) {
+            return true;
+        }
+        if (b == null) {
+            return false;
+        }
+        return q5(b, a.getValue()) && exe8(a.getNext(), b);
     }
+
+    public static void exe9(Node<Integer> a, Node<Integer> b) {
+        while (a != null) {
+            if (q5(b, a.getValue())) {
+                System.out.print(a.getValue() + " ");
+            }
+            a = a.getNext();
+        }
+        System.out.println();
+    }
+
+
+    public static Node<Integer> exe10(Node<Integer> a, Node<Integer> b) {
+        Node<Integer> dummy = new Node<>(null);
+        Node<Integer> current = dummy;
+
+        while (a != null) {
+            if (q5(b, a.getValue())) {
+                current.setNext(new Node<>(a.getValue()));
+                current = current.getNext();
+            }
+            a = a.getNext();
+        }
+        return dummy.getNext();
+    }
+
+    public static Node<Integer> exe11(Node<Integer> a, Node<Integer> b) {
+        Node<Integer> dummy = new Node<>(null, a);
+        Node<Integer> prev = dummy;
+        Node<Integer> current = a;
+
+        while (current != null) {
+            if (q5(b, current.getValue())) {
+                prev.setNext(current.getNext());
+            } else {
+                prev = current;
+            }
+            current = current.getNext();
+        }
+        return dummy.getNext();
+    }
 	
 	
 	
